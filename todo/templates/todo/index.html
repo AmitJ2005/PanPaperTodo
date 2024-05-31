@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PanPaperToDo</title>
+    <link rel="stylesheet" href="../../static/todo/styles.css">
+    
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="#">PanPaperToDo</a></div>
+        <div class="right-side">
+            <button class="signup-button"><a href="{% url 'signup' %}">Sign-up</a></button>
+            <button class="login-button"><a href="{% url 'login' %}">Login</a></button>
+            <div class="profile-icon">&#128100;</div>
+        </div>
+    </header>
+    <main>
+        <div class="content">
+            <p>Makes your Day more Productive &#128515;</p>
+            <div class="mobile-buttons">
+                <button class="login-button"><a href="{% url 'login' %}">Login</a></button>
+                <button class="signup-button"><a href="{% url 'signup' %}">Sign-up</a></button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
