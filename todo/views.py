@@ -4,19 +4,22 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import Task  # Make sure to import the Task model
 from .forms import TaskForm  # Ensure TaskForm is also imported if used in the dashboard view
+from django.contrib import messages
+from .forms import SignUpForm
+from django.contrib.auth.models import User
 
 def index(request):
     return render(request, 'todo/index.html')
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Log the user in after sign up
+            login(request, user)
             return redirect('dashboard')
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'todo/signup.html', {'form': form})
 
 @login_required

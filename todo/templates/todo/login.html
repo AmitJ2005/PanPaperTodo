@@ -1,15 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/css/login.css' %}">
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+    <header>
+        <div class="logo"><a href="/">PanPaperToDo</a></div>
+        <div class="right-side">
+            <a href="{% url 'signup' %}" class="signup-button">Sign-up</a>
+            <div class="profile-icon">&#128100;</div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="center">
+                <h1>Login</h1>
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="txt_field">
+                        <input type="text" name="username" required>
+                        <span></span>
+                        <label>Username</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="password" name="password" required>
+                        <span></span>
+                        <label>Password</label>
+                    </div>
+                    
+                    <input name="submit" type="submit" value="Login">
+                    <div class="signup_link">
+                        Don't have an account? <a href="{% url 'signup' %}">Sign Up Here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

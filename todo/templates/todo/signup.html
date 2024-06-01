@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Sign Up</title>
@@ -11,5 +11,42 @@
         <button type="submit">Sign Up</button>
     </form>
     <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/css/signup.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="/">PanPaperToDo</a></div>
+        <div class="right-side">
+            <a href="{% url 'login' %}" class="signup-button">Login</a>
+            <div class="profile-icon">&#128100;</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="center">
+                <h1>Register</h1>
+                <form method="POST" action="{% url 'signup' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input name="submit" type="Submit" value="Sign Up">
+                    <div class="signup_link">
+                        Have an Account? <a href="{% url 'login' %}">Login Here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
