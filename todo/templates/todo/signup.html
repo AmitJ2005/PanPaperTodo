@@ -39,8 +39,27 @@
                 <h1>Register</h1>
                 <form method="POST" action="{% url 'signup' %}">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <input name="submit" type="Submit" value="Sign Up">
+                    <div class="txt_field">
+                        <input type="text" name="username" required>
+                        <span></span>
+                        <label>Username</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="email" name="email" required>
+                        <span></span>
+                        <label>Email</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="password" name="password1" required>
+                        <span></span>
+                        <label>Password</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="password" name="password2" required>
+                        <span></span>
+                        <label>Confirm Password</label>
+                    </div>
+                    <input name="submit" type="submit" value="Sign Up">
                     <div class="signup_link">
                         Have an Account? <a href="{% url 'login' %}">Login Here</a>
                     </div>
