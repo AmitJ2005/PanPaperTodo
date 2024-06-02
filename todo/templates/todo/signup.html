@@ -1,61 +1,63 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Sign Up</title>
-</head>
-<body>
-    <h1>Sign Up</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign Up</button>
-    </form>
-    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'todo/css/signup.css' %}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'todo/css/signup.css' %}"
+    />
+  </head>
+  <body>
     <header>
-        <div class="logo"><a href="/">PanPaperToDo</a></div>
-        <div class="right-side">
-            <a href="{% url 'login' %}" class="signup-button">Login</a>
-            <div class="profile-icon">&#128100;</div>
-        </div>
+      <div class="logo"><a href="/">PanPaperToDo</a></div>
+      <div class="right-side">
+        <a href="{% url 'login' %}" class="signup-button">Login</a>
+        <div class="profile-icon">&#128100;</div>
+      </div>
     </header>
 
     <main>
         <div class="container">
             <div class="center">
                 <h1>Register</h1>
-                <form method="POST" action="{% url 'signup' %}">
+                <form id="signup-form" method="POST" action="{% url 'signup' %}">
                     {% csrf_token %}
+                    
+                    <!-- Error messages block -->
+                    <div id="error-container">
+                        {% if form.non_field_errors %}
+                        <div class="error_message">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                            <div class="error_message">{{ error }}</div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+        
                     <div class="txt_field">
-                        <input type="text" name="username" required>
+                        <input type="text" name="username" id="username" required>
                         <span></span>
                         <label>Username</label>
                     </div>
                     <div class="txt_field">
-                        <input type="email" name="email" required>
+                        <input type="email" name="email" id="email" required>
                         <span></span>
                         <label>Email</label>
                     </div>
                     <div class="txt_field">
-                        <input type="password" name="password1" required>
+                        <input type="password" name="password1" id="password1" required>
                         <span></span>
-                        <label>Password</label>
+                        <label>Create Password</label>
                     </div>
                     <div class="txt_field">
-                        <input type="password" name="password2" required>
+                        <input type="password" name="password2" id="password2" required>
                         <span></span>
                         <label>Confirm Password</label>
                     </div>
@@ -67,5 +69,7 @@
             </div>
         </div>
     </main>
-</body>
+
+    <script src="{% static 'todo/js/signup.js' %}"></script>
+  </body>
 </html>
