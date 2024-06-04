@@ -2,24 +2,52 @@
 <html>
 <head>
     <title>Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/css/dashboard.css' %}">
 </head>
 <body>
-    <h1>Dashboard</h1>
-    <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-    <h2>Your Tasks</h2>
-    <ul>
-        {% for task in tasks %}
-        <li>{{ task.title }} - {{ task.due_date }}</li>
-        {% endfor %}
-    </ul>
-    <h2>Add a New Task</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Task</button>
-    </form>
+    <header>
+        <div class="logo"><a href="/">PanPaperToDo</a></div>
+        <div class="right-side">
+            <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+            <div class="profile-icon">&#128100;</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="left-side">
+                <h2>Not Done Work</h2>
+                <ul>
+                    {% for task in tasks %}
+                    <li>{{ task.due_date }}: {{ task.title }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="right-side">
+                <h2>Today: {{ current_date }}</h2>
+                <form id="date-form" method="GET" action="{% url 'dashboard' %}">
+                    <label for="task-date">Select Date:</label>
+                    <input type="date" id="task-date" name="task_date" min="{{ min_date }}" max="{{ max_date }}" value="{{ selected_date }}">
+                    <button type="submit">Load Tasks</button>
+                </form>
+
+                <h3>Karna hai</h3>
+                <ul>
+                    {% for task in tasks %}
+                    <li>{{ task.title }} <a href="{% url 'edit_task' task.id %}">Edit</a> <a href="{% url 'delete_task' task.id %}">Delete</a></li>
+                    {% endfor %}
+                </ul>
+
+                <h2>Add a New Task</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="hidden" name="task_date" value="{{ selected_date }}">
+                    <button type="submit">Add Task</button>
+                </form>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
