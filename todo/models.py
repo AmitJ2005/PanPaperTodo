@@ -9,3 +9,11 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+
+class Learning(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()
+    content = models.TextField()
+
+    def __str__(self):
+        return f"{self.user.username} - {self.date}"

@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 import datetime
 import os
+from .forms import LearningForm
 
 def index(request):
     return render(request, 'todo/index.html')
@@ -37,6 +38,8 @@ def dashboard(request):
     selected_date = datetime.datetime.strptime(selected_date_str, '%Y-%m-%d').date()
     
     tasks = Task.objects.filter(user=request.user, due_date=selected_date)
+    not_done_tasks = Task.objects.filter(user=request.user, completed=False).exclude(due_date=selected_date)
+    learning = Learning.objects.filter(user=request.user, date=selected_date).first()
     
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -56,11 +59,31 @@ def dashboard(request):
         'selected_date': selected_date,
         'min_date': min_date,
         'max_date': max_date,
+        'not_done_tasks': not_done_tasks,
+        'learning': learning.content if learning else '',
     }
 
-    # print("Looking for template at: ", os.path.join('todo_app', 'todo', 'templates', 'dashboard.html'))
     return render(request, 'todo/dashboard.html', context)
 
+@login_required
+def complete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+    task.completed = True
+    task.save()
+    return redirect('dashboard')
+
+@login_required
+def add_learning(request):
+    if request.method == 'POST':
+        form = LearningForm(request.POST)
+        if form.is_valid():
+            learning = form.save(commit=False)
+            learning.user = request.user
+            learning.save()
+            return redirect('dashboard')
+    else:
+        form = LearningForm()
+    return render(request, 'todo/add_learning.html', {'form': form})
 
 @login_required
 def edit_task(request, task_id):
