@@ -11,6 +11,7 @@ from django.utils import timezone
 import datetime
 import os
 from .forms import LearningForm
+from .models import Learning
 
 def index(request):
     return render(request, 'todo/index.html')
