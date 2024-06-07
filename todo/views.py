@@ -78,22 +78,9 @@ def dashboard(request):
 @login_required
 def complete_task(request, task_id):
     task = get_object_or_404(Task, id=task_id, user=request.user)
-    task.completed = True
+    task.completed = not task.completed  # Toggle completion status
     task.save()
     return redirect('dashboard')
-
-@login_required
-def add_learning(request):
-    if request.method == 'POST':
-        form = LearningForm(request.POST)
-        if form.is_valid():
-            learning = form.save(commit=False)
-            learning.user = request.user
-            learning.save()
-            return redirect('dashboard')
-    else:
-        form = LearningForm()
-    return render(request, 'todo/add_learning.html', {'form': form})
 
 @login_required
 def edit_task(request, task_id):

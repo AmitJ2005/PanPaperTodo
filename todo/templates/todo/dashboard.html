@@ -36,9 +36,12 @@
                         {% for task in tasks %}
                         {% if not task.completed %}
                         <li>
-                            <input type="checkbox" onclick="completeTask({{ task.id }})">{{ task.title }}
-                            <a href="{% url 'edit_task' task.id %}">Edit</a>
-                            <a href="{% url 'delete_task' task.id %}">Delete</a>
+                            <form method="post" action="{% url 'complete_task' task.id %}">
+                                {% csrf_token %}
+                                <input type="checkbox" onclick="this.form.submit()">{{ task.title }}
+                                <a href="{% url 'edit_task' task.id %}">Edit</a>
+                                <a href="{% url 'delete_task' task.id %}">Delete</a>
+                            </form>
                         </li>
                         {% endif %}
                         {% endfor %}
@@ -55,7 +58,10 @@
                         {% for task in tasks %}
                         {% if task.completed %}
                         <li>
-                            <input type="checkbox" checked>{{ task.title }}
+                            <form method="post" action="{% url 'complete_task' task.id %}">
+                                {% csrf_token %}
+                                <input type="checkbox" checked onclick="this.form.submit()">{{ task.title }}
+                            </form>
                         </li>
                         {% endif %}
                         {% endfor %}
