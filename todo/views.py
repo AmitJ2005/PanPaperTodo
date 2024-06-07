@@ -43,13 +43,22 @@ def dashboard(request):
     learning = Learning.objects.filter(user=request.user, date=selected_date).first()
     
     if request.method == 'POST':
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            task = form.save(commit=False)
-            task.user = request.user
-            task.due_date = selected_date
-            task.save()
+        if 'learning_content' in request.POST:
+            learning_content = request.POST['learning_content']
+            if learning:
+                learning.content = learning_content
+            else:
+                learning = Learning(user=request.user, date=selected_date, content=learning_content)
+            learning.save()
             return redirect('dashboard')
+        else:
+            form = TaskForm(request.POST)
+            if form.is_valid():
+                task = form.save(commit=False)
+                task.user = request.user
+                task.due_date = selected_date
+                task.save()
+                return redirect('dashboard')
     else:
         form = TaskForm()
     
@@ -61,7 +70,7 @@ def dashboard(request):
         'min_date': min_date,
         'max_date': max_date,
         'not_done_tasks': not_done_tasks,
-        'learning': learning.content if learning else '',
+        'learning_content': learning.content if learning else '',
     }
 
     return render(request, 'todo/dashboard.html', context)

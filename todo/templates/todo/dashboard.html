@@ -64,9 +64,9 @@
             </div>
             <div class="learning">
                 <h3>Today learning:</h3>
-                <form method="post" action="{% url 'add_learning' %}">
+                <form method="post">
                     {% csrf_token %}
-                    <textarea name="learning">{{ learning }}</textarea>
+                    <textarea name="learning_content">{{ learning_content }}</textarea>
                     <button type="submit">Save</button>
                 </form>
             </div>
