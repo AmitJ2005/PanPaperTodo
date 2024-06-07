@@ -26,6 +26,7 @@
         <div class="main">
             <div class="header">
                 <h2>Today: {{ selected_date }}</h2>
+                <button id="prevDayButton">Previous Day</button>
                 <button id="nextDayButton">Next Day</button>
                 <input type="date" id="datePicker" max="{{ max_date }}" min="{{ min_date }}" value="{{ selected_date }}">
             </div>
