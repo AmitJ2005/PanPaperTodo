@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'todo/css/dashboard.css' %}">
 </head>
@@ -30,9 +31,11 @@
         <div class="main">
             <div class="header">
                 <h2>Date: {{ selected_date }}</h2>
-                <button class="prev-day-button" id="prevDayButton">Previous Day</button>
-                <input type="date" id="datePicker" max="{{ max_date }}" min="{{ min_date }}" value="{{ selected_date }}">
-                <button class="next-day-button" id="nextDayButton">Next Day</button>
+                <div class="date-controls">
+                    <button class="prev-day-button" id="prevDayButton">Previous Day</button>
+                    <input type="date" id="datePicker" max="{{ max_date }}" min="{{ min_date }}" value="{{ selected_date }}">
+                    <button class="next-day-button" id="nextDayButton">Next Day</button>
+                </div>
             </div>            
             <div class="tasks">
                 <div class="not-done">
