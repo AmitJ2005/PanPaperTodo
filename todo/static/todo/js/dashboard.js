@@ -60,3 +60,11 @@ document.getElementById('datePicker').addEventListener('change', function() {
     window.location.href = '?task_date=' + this.value;
 });
 
+function toggleTaskInput() {
+    var taskInputContainer = document.getElementById("taskInputContainer");
+    if (taskInputContainer.style.display === "none") {
+        taskInputContainer.style.display = "block";
+    } else {
+        taskInputContainer.style.display = "none";
+    }
+}

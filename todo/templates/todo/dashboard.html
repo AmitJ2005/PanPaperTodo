@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'todo/css/dashboard.css' %}">
 </head>
@@ -16,7 +17,8 @@
     </div>
     <div class="container">
         <div class="sidebar">
-            <h2>Not Done Work</h2>
+            <h2>INCOMPLETE TASKS
+            </h2>
             <ul>
                 {% for task in not_done_tasks %}
                 <li>{{ task.due_date }}<br>{{ task.title }}</li>
@@ -25,14 +27,14 @@
         </div>
         <div class="main">
             <div class="header">
-                <h2>Today: {{ selected_date }}</h2>
-                <button id="prevDayButton">Previous Day</button>
-                <button id="nextDayButton">Next Day</button>
+                <h2>Date: {{ selected_date }}</h2>
+                <button class="prev-day-button" id="prevDayButton">Previous Day</button>
                 <input type="date" id="datePicker" max="{{ max_date }}" min="{{ min_date }}" value="{{ selected_date }}">
-            </div>
+                <button class="next-day-button" id="nextDayButton">Next Day</button>
+            </div>            
             <div class="tasks">
                 <div class="not-done">
-                    <h3>Karna hai</h3>
+                    <h3>Karna hai <i id="addTaskIcon" class="fas fa-plus-circle" onclick="toggleTaskInput()"></i></h3>
                     <ul>
                         {% for task in tasks %}
                         {% if not task.completed %}
@@ -47,11 +49,15 @@
                         {% endif %}
                         {% endfor %}
                     </ul>
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit">Add Task</button>
-                    </form>
+                    <div id="taskInputContainer" style="display: none;">
+                        <form method="post">
+                            {% csrf_token %}
+                            <label for="taskTitle">Add task</label>
+                            <input type="text" id="taskTitle" name="title" placeholder="Enter task title">
+                            <button type="submit">Add Task</button>
+                        </form>
+                    </div>
+                    
                 </div>
                 <div class="done">
                     <h3>Ho gaya</h3>
