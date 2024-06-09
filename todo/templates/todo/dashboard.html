@@ -17,11 +17,13 @@
     </div>
     <div class="container">
         <div class="sidebar">
-            <h2>INCOMPLETE TASKS
-            </h2>
+            <h2>INCOMPLETE TASKS</h2>
             <ul>
                 {% for task in not_done_tasks %}
-                <li>{{ task.due_date }}<br>{{ task.title }}</li>
+                <li>
+                    <div class="task-date">{{ task.due_date }}</div>
+                    <div class="task-title">{{ task.title }}</div>
+                </li>
                 {% endfor %}
             </ul>
         </div>
@@ -41,11 +43,12 @@
                         <li>
                             <form method="post" action="{% url 'complete_task' task.id %}">
                                 {% csrf_token %}
-                                <input type="checkbox" onclick="this.form.submit()">{{ task.title }}
+                                <input type="checkbox" onclick="this.form.submit()">
+                                <div>{{ task.title }}</div>
                                 <a href="{% url 'edit_task' task.id %}">Edit</a>
                                 <a href="{% url 'delete_task' task.id %}">Delete</a>
                             </form>
-                        </li>
+                        </li>                        
                         {% endif %}
                         {% endfor %}
                     </ul>

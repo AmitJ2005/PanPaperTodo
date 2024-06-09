@@ -34,19 +34,19 @@ body {
 }
 
 .sidebar {
-    width: 25%;
     background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 250px;
     margin-right: 20px;
+    overflow-y: auto;
 }
 
 .sidebar h2 {
-    margin-top: 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: #343a40;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .sidebar ul {
@@ -54,10 +54,21 @@ body {
     padding: 0;
 }
 
-.sidebar ul li {
-    margin-bottom: 15px;
-    font-size: 16px;
-    color: #495057;
+.sidebar li {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.sidebar .task-date {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.sidebar .task-title {
+    font-size: 14px;
+    color: #343a40;
 }
 
 .main {
@@ -68,43 +79,6 @@ body {
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-}
-
-/* General styles for the date picker input */
-.header input[type="date"] {
-    background-color: #f5f7fa;
-    color: #343a40;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    padding: 8px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-    width: auto; /* Adjust width as needed */
-}
-
-/* Style for the date picker on hover */
-.header input[type="date"]:hover {
-    background-color: #e2e6ea;
-    border-color: #495057;
-}
-
-/* Style for the date picker on focus */
-.header input[type="date"]:focus {
-    outline: none;
-    border-color: #007bff;
-    background-color: #fff;
-}
-
-/* Align the date picker with other header elements */
-.header input[type="date"] {
-    margin-left: 10px;
-}
-
-/* Customize the appearance of the date picker icon */
-.header input[type="date"]::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    filter: invert(0.5);
 }
 
 .header {
@@ -141,6 +115,30 @@ body {
     background-color: #495057;
 }
 
+.header input[type="date"] {
+    background-color: #f5f7fa;
+    color: #343a40;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    width: auto;
+    margin-left: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.header input[type="date"]:hover {
+    background-color: #e2e6ea;
+    border-color: #495057;
+}
+
+.header input[type="date"]:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #fff;
+}
+
 .header .prev-day-button::before,
 .header .next-day-button::after {
     content: '';
@@ -155,28 +153,21 @@ body {
 .header .prev-day-button::before {
     border-width: 6px 8px 6px 0;
     border-color: transparent #fff transparent transparent;
-    margin-right: 8px; /* Add space between arrow and text */
 }
 
 .header .next-day-button::after {
     border-width: 6px 0 6px 8px;
     border-color: transparent transparent transparent #fff;
-    margin-left: 8px; /* Add space between text and arrow */
+    margin-left: 8px;
 }
 
 .header .prev-day-button:hover {
-    transform: translateX(-5px); /* Slide left on hover */
+    transform: translateX(-5px);
 }
 
 .header .next-day-button:hover {
-    transform: translateX(5px); /* Slide right on hover */
+    transform: translateX(5px);
 }
-
-.header input {
-    padding: 8px;
-    font-size: 14px;
-}
-
 
 .tasks {
     display: flex;
@@ -184,13 +175,15 @@ body {
     margin-bottom: 20px;
 }
 
-.tasks .not-done, .tasks .done {
+.tasks .not-done,
+.tasks .done {
     width: 48%;
     background-color: #f8f9fa;
     padding: 20px;
     border: 1px solid #dee2e6;
     border-radius: 8px;
     margin: 10px;
+    box-sizing: border-box;
 }
 
 .tasks h3 {
@@ -209,6 +202,7 @@ body {
     margin-bottom: 10px;
     font-size: 16px;
     color: #495057;
+    word-break: break-all; /* Ensure long words break */
 }
 
 .tasks ul li a {
@@ -221,9 +215,88 @@ body {
     text-decoration: underline;
 }
 
-.tasks .not-done form,
-.tasks .done form {
-    display: inline;
+.tasks ul li form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Ensure items wrap within the form */
+    width: 100%; /* Ensure form takes full width of container */
+}
+
+.tasks ul li form input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.tasks ul li form div {
+    flex: 1; /* Allow the text to take the remaining space */
+    word-break: break-word; /* Break long words */
+}
+
+
+
+#addTaskIcon {
+    cursor: pointer;
+    font-size: 24px;
+    color: #007bff;
+    margin-left: 10px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#addTaskIcon:hover {
+    transform: rotate(90deg);
+    color: #0056b3;
+}
+
+#taskInputContainer {
+    margin-top: 20px;
+}
+
+form label {
+    font-size: 16px;
+    color: #343a40;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+form input[type="text"] {
+    width: calc(100% - 24px);
+    padding: 10px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #495057;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+form input[type="text"]:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    outline: none;
+}
+
+form button[type="submit"],
+button {
+    background-color: #343a40;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover,
+button:hover {
+    background-color: #495057;
 }
 
 .learning {
@@ -248,108 +321,4 @@ textarea {
     font-size: 16px;
     border: 1px solid #dee2e6;
     border-radius: 4px;
-}
-
-button {
-    background-color: #343a40;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-size: 16px;
-    border-radius: 4px;
-}
-
-button:hover {
-    background-color: #495057;
-}
-
-.tasks ul li form {
-    display: flex;
-    align-items: center; 
-}
-
-.tasks ul li form label {
-    margin-left: 0px; 
-}
-
-.tasks ul li form input[type="checkbox"] {
-    margin-right: 20px; 
-}
-
-/* Increase the size of the checkbox */
-.tasks ul li form input[type="checkbox"] {
-    width: 17px; /* Adjust the width as needed */
-    height: 17px; /* Adjust the height as needed */
-    margin-right: 8px; /* Adjust the margin as needed */
-    align-items: center;
-    vertical-align: middle;
-}
-
-/* Style for the Font Awesome "+" icon */
-#addTaskIcon {
-    cursor: pointer;
-    font-size: 24px;
-    color: #007bff;
-    margin-left: 10px;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-#addTaskIcon:hover {
-    transform: rotate(90deg);
-    color: #0056b3;
-}
-
-/* Style the task input container */
-#taskInputContainer {
-    margin-top: 20px;
-}
-
-/* Style the form label */
-form label {
-    font-size: 16px;
-    color: #343a40;
-    font-weight: 600;
-    margin-bottom: 8px;
-    display: block;
-}
-
-/* Style the input box */
-form input[type="text"] {
-    width: calc(100% - 24px); /* Adjust width as needed */
-    padding: 10px;
-    margin: 8px 0;
-    display: block;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-    color: #495057;
-    background-color: #f8f9fa;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-}
-
-/* Style the input box on focus */
-form input[type="text"]:focus {
-    border-color: #007bff;
-    background-color: #fff;
-    outline: none;
-}
-
-/* Style the add task button */
-form button[type="submit"] {
-    background-color: #343a40;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-/* Style the button on hover */
-form button[type="submit"]:hover {
-    background-color: #495057;
 }
