@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>User Profile</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Profile Info</legend>
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+        </fieldset>
+        <button type="submit">Update Profile</button>
+    </form>
+    <a href="{% url 'change_password' %}">Change Password</a>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

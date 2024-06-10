@@ -13,8 +13,8 @@
     <div class="navbar">
         <div class="logo">PanPaperToDo</div>
         <div class="profile">
-            <img src="{% static 'todo/images/profile-pic.png' %}" alt="Profile Icon">
-        </div>
+            <img src="{{ user.profile.profile_picture.url }}" alt="Profile Icon">
+        </div>        
     </div>
     <div class="container">
         <div class="sidebar">
