@@ -68,3 +68,19 @@ function toggleTaskInput() {
         taskInputContainer.style.display = "none";
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const profileInfo = document.querySelector('.profile-info');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+
+    profileInfo.addEventListener('click', function () {
+        dropdownMenu.classList.toggle('show');
+    });
+
+    // Close the dropdown if the user clicks outside of it
+    window.addEventListener('click', function (event) {
+        if (!profileInfo.contains(event.target)) {
+            dropdownMenu.classList.remove('show');
+        }
+    });
+});

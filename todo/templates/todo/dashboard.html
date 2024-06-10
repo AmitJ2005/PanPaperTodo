@@ -12,9 +12,19 @@
 <body>
     <div class="navbar">
         <div class="logo">PanPaperToDo</div>
-        <div class="profile">
-            <img src="{{ user.profile.profile_picture.url }}" alt="Profile Icon">
-        </div>        
+        <div class="profile-dropdown">
+            <div class="profile-info">
+                <img src="{{ user.profile.profile_picture.url }}" alt="Profile Icon">
+                <span>{{ user.first_name }} {{ user.last_name }}</span>
+                <i class="fas fa-caret-down"></i>
+            </div>
+            <div class="dropdown-menu">
+                <a href="{% url 'profile' %}"><i class="fas fa-user"></i> My Profile</a>
+                <a href="{% url 'change_password' %}"><i class="fas fa-cog"></i> Account Settings</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Need Help?</a>
+                <a href="{% url 'login' %}"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+            </div>
+        </div>
     </div>
     <div class="container">
         <div class="sidebar">
