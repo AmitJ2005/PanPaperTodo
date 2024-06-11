@@ -1,9 +1,24 @@
+/* Define color variables for a consistent theme */
+:root {
+    --primary-color: #2a3f54;
+    --secondary-color: #007bff;
+    --light-bg: #f5f7fa;
+    --dark-bg: #343a40;
+    --border-color: #dee2e6;
+    --white: #fff;
+    --text-color: #333;
+    --highlight-color: #e2e6ea;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* General body styling */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f7fa;
-    color: #333;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    overflow-x: hidden;
 }
 
 /* Navbar and Profile Dropdown Styling */
@@ -12,9 +27,9 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 50px;
-    background-color: #2a3f54;
-    color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: var(--shadow);
 }
 
 .logo {
@@ -22,9 +37,13 @@ body {
     font-weight: bold;
 }
 
+.logo a {
+    text-decoration: none; /* Remove underline */
+    color: rgb(255, 255, 255); /* Set text color to match the logo */
+}
+
 .profile-dropdown {
     position: relative;
-    display: inline-block;
 }
 
 .profile-info {
@@ -50,10 +69,10 @@ body {
     position: absolute;
     right: 0;
     top: 50px;
-    background-color: #fff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background-color: var(--white);
+    box-shadow: var(--shadow);
     z-index: 1;
-    border-radius: 4px;
+    border-radius: 8px;
     overflow: hidden;
     width: 250px;
 }
@@ -62,14 +81,13 @@ body {
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    color: #333;
+    color: var(--text-color);
     text-decoration: none;
-    white-space: nowrap;
     transition: background-color 0.3s ease;
 }
 
 .dropdown-menu a:hover {
-    background-color: #f1f1f1;
+    background-color: var(--highlight-color);
 }
 
 .dropdown-menu a i {
@@ -80,20 +98,32 @@ body {
     display: block;
 }
 
+/* Container Styling */
 .container {
     display: flex;
-    height: calc(100vh - 60px);
+    min-height: calc(95vh - 60px);
     padding: 20px;
 }
 
+/* Sidebar Styling */
 .sidebar {
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
     padding: 20px;
-    width: 250px;
+    width: 300px;
     margin-right: 20px;
     overflow-y: auto;
+    max-height: calc(95vh - 100px);
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
 }
 
 .sidebar h2 {
@@ -101,128 +131,171 @@ body {
     font-weight: bold;
     margin-bottom: 20px;
     color: #2a3f54;
+    text-align: center; /* Center align the title text */
 }
 
+/* Task List Styling */
 .sidebar ul {
     list-style: none;
     padding: 0;
+    width: 100%; /* Ensure the list takes full width */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align items within the list */
 }
 
+/* Task Item Styling */
 .sidebar li {
     display: flex;
     flex-direction: column;
     padding: 10px 0;
     border-bottom: 1px solid #dee2e6;
+    width: 90%; /* Set a fixed width for tasks to center */
+    max-width: 300px; /* Maximum width for the task items */
+    /* text-align: center; Center align the task items */
+    box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
 .sidebar .task-date {
     font-size: 12px;
     color: #6c757d;
+    /* text-align: center; Center align the date text */
 }
 
 .sidebar .task-title {
     font-size: 14px;
     color: #343a40;
+    /* text-align: center; Center align the task title text */
 }
 
+/* Main Content Styling */
 .main {
-    width: 100%;
+    flex-grow: 1;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--white);
+    box-shadow: var(--shadow);
     border-radius: 8px;
     display: flex;
     flex-direction: column;
 }
 
-.header {
+/* Header Styling */
+
+/* Date Controls Styling */
+.date-controls {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Aligns items horizontally at the center */
+    align-items: center; /* Aligns items vertically at the center */
+}
+.date-button {
+    display: inline-flex;
     align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #dee2e6;
-    padding-bottom: 10px;
-}
-
-.header h2 {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 600;
-    color: #2a3f54;
-}
-
-.header button,
-.header input {
-    background-color: #2a3f54;
-    color: #fff;
+    justify-content: center;
+    background-color: var(--secondary-color);
+    color: var(--white);
     border: none;
-    padding: 8px 12px;
-    font-size: 14px;
+    padding: 10px 20px;
+    font-size: 0.9em;
     cursor: pointer;
-    border-radius: 4px;
-    margin-left: 10px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 25px; /* Rounded corners */
+    margin: 0 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow);
 }
 
-.header button:hover,
-.header input:hover {
-    background-color: #495057;
+.date-controls {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    gap: 10px; /* Add space between elements */
 }
 
-.header input[type="date"] {
-    background-color: #f5f7fa;
-    color: #343a40;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    padding: 8px 12px;
-    font-size: 14px;
+.date-button i {
+    margin: 0 8px;
+}
+
+.date-button:hover {
+    background-color: var(--dark-bg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+.date-button:active {
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reduced shadow on click */
+    transform: translateY(0); /* Remove lift effect on click */
+}
+
+input[type="date"] {
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9em;
+    border-radius: 25px; /* Rounded corners */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 10px;
+    box-shadow: var(--shadow);
     cursor: pointer;
+    appearance: none; /* Remove default styling */
     width: auto;
-    margin-left: 10px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    -webkit-appearance: none; /* Required for Safari */
+    -moz-appearance: none; /* Required for Firefox */
 }
 
-.header input[type="date"]:hover {
-    background-color: #e2e6ea;
-    border-color: #495057;
+input[type="date"]:hover {
+    background-color: var(--highlight-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
-.header input[type="date"]:focus {
+input[type="date"]:focus {
     outline: none;
-    border-color: #007bff;
-    background-color: #fff;
+    background-color: var(--white);
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Blue shadow to indicate focus */
+    transform: translateY(-2px); /* Maintain lift effect on focus */
 }
 
-.header .prev-day-button::before,
-.header .next-day-button::after {
-    content: '';
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    margin-right: 8px;
-    vertical-align: middle;
+/* Date Picker Styling for Chrome, Safari, and Edge */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: transparent; /* Hides the default calendar icon */
+    background: none; /* Removes default background */
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
 }
 
-.header .prev-day-button::before {
-    border-width: 6px 8px 6px 0;
-    border-color: transparent #fff transparent transparent;
+input[type="date"]::-webkit-clear-button,
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
 }
 
-.header .next-day-button::after {
-    border-width: 6px 0 6px 8px;
-    border-color: transparent transparent transparent #fff;
-    margin-left: 8px;
+/* Date Picker Styling for Firefox */
+input[type="date"]::-moz-focus-inner {
+    border: 0;
 }
 
-.header .prev-day-button:hover {
-    transform: translateX(-5px);
+/* Ensures the date input icon is visible */
+input[type="date"]::before {
+    content: attr(placeholder);
+    color: var(--text-color);
+    padding: 0 10px;
 }
 
-.header .next-day-button:hover {
-    transform: translateX(5px);
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+    display: none;
 }
 
+
+
+
+/* Tasks Section Styling */
 .tasks {
     display: flex;
     justify-content: space-between;
@@ -232,9 +305,9 @@ body {
 .tasks .not-done,
 .tasks .done {
     width: 48%;
-    background-color: #f8f9fa;
+    background-color: var(--light-bg);
     padding: 20px;
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     margin: 10px;
     box-sizing: border-box;
@@ -242,9 +315,9 @@ body {
 
 .tasks h3 {
     margin-top: 0;
-    font-size: 18px;
+    font-size: 1.2em;
     font-weight: 600;
-    color: #2a3f54;
+    color: var(--primary-color);
 }
 
 .tasks ul {
@@ -254,13 +327,13 @@ body {
 
 .tasks ul li {
     margin-bottom: 10px;
-    font-size: 16px;
-    color: #495057;
-    word-break: break-all; /* Ensure long words break */
+    font-size: 1em;
+    color: var(--text-color);
+    word-break: break-all;
 }
 
 .tasks ul li a {
-    color: #007bff;
+    color: var(--secondary-color);
     text-decoration: none;
     margin-left: 5px;
 }
@@ -272,8 +345,8 @@ body {
 .tasks ul li form {
     display: flex;
     align-items: center;
-    flex-wrap: wrap; /* Ensure items wrap within the form */
-    width: 100%; /* Ensure form takes full width of container */
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .tasks ul li form input[type="checkbox"] {
@@ -284,21 +357,21 @@ body {
 }
 
 .tasks ul li form div {
-    flex: 1; /* Allow the text to take the remaining space */
-    word-break: break-word; /* Break long words */
+    flex: 1;
+    word-break: break-word;
 }
 
 #addTaskIcon {
     cursor: pointer;
-    font-size: 24px;
-    color: #007bff;
+    font-size: 1.5em;
+    color: var(--secondary-color);
     margin-left: 10px;
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
 #addTaskIcon:hover {
     transform: rotate(90deg);
-    color: #0056b3;
+    color: var(--dark-bg);
 }
 
 #taskInputContainer {
@@ -306,8 +379,8 @@ body {
 }
 
 form label {
-    font-size: 16px;
-    color: #343a40;
+    font-size: 1em;
+    color: var(--text-color);
     font-weight: 600;
     margin-bottom: 8px;
     display: block;
@@ -318,59 +391,79 @@ form input[type="text"] {
     padding: 10px;
     margin: 8px 0;
     display: block;
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     box-sizing: border-box;
-    font-size: 16px;
-    color: #495057;
-    background-color: #f8f9fa;
+    font-size: 1em;
+    color: var(--text-color);
+    background-color: var(--light-bg);
     transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 form input[type="text"]:focus {
-    border-color: #007bff;
-    background-color: #fff;
+    border-color: var(--secondary-color);
+    background-color: var(--white);
     outline: none;
 }
 
 form button[type="submit"],
 button {
-    background-color: #2a3f54;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--white);
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     margin-top: 10px;
-    font-size: 16px;
+    font-size: 1em;
     border-radius: 4px;
     transition: background-color 0.3s ease;
 }
 
 form button[type="submit"]:hover,
 button:hover {
-    background-color: #495057;
+    background-color: var(--dark-bg);
 }
 
+/* Learning Section Styling */
 .learning {
     margin-top: 20px;
-    background-color: #f8f9fa;
+    background-color: var(--light-bg);
     padding: 20px;
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
 }
 
 .learning h3 {
     margin-top: 0;
-    font-size: 18px;
+    font-size: 1.2em;
     font-weight: 600;
-    color: #2a3f54;
+    color: var(--primary-color);
 }
 
 textarea {
-    width: 97%;
+    width: 98%;
     height: 100px;
     padding: 10px;
-    font-size: 16px;
-    border: 1px solid #dee2e6;
+    font-size: 1.1em;
+    font-family: 'Roboto', sans-serif;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
+    resize: vertical;
+}
+
+/* Custom scrollbar styles */
+textarea::-webkit-scrollbar {
+    width: 4px; /* Slimmer scrollbar */
+}
+
+textarea::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light grey track */
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: #888; /* Darker grey scrollbar handle */
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker grey on hover */
 }

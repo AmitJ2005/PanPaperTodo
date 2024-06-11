@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="navbar">
-        <div class="logo">PanPaperToDo</div>
+        <div class="logo"><a href="/">PanPaperToDo</a></div>
         <div class="profile-dropdown">
             <div class="profile-info">
                 <img src="{{ user.profile.profile_picture.url }}" alt="Profile Icon">
@@ -42,11 +42,16 @@
             <div class="header">
                 <h2>Date: {{ selected_date }}</h2>
                 <div class="date-controls">
-                    <button class="prev-day-button" id="prevDayButton">Previous Day</button>
+                    <button class="date-button" id="prevDayButton">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
                     <input type="date" id="datePicker" max="{{ max_date }}" min="{{ min_date }}" value="{{ selected_date }}">
-                    <button class="next-day-button" id="nextDayButton">Next Day</button>
+                    <button class="date-button" id="nextDayButton">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
             </div>
+            
             <div class="tasks">
                 <div class="not-done">
                     <h3>To Do <i id="addTaskIcon" class="fas fa-plus-circle" onclick="toggleTaskInput()"></i></h3>

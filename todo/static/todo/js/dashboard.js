@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var nextDayButton = document.getElementById('nextDayButton');
     var prevDayButton = document.getElementById('prevDayButton');
     
-    // Function to update the URL with the selected date
     function updateUrl(date) {
         var formattedDate = formatDate(date);
         var url = new URL(window.location.href);
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = url.toString();
     }
 
-    // Function to format the date as YYYY-MM-DD
     function formatDate(date) {
         var year = date.getFullYear();
         var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero indexed
@@ -19,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return year + '-' + month + '-' + day;
     }
 
-    // Function to handle click on the "Next Day" button
     nextDayButton.addEventListener('click', function() {
         var selectedDate = new Date(datePicker.value);
         if (isNaN(selectedDate.getTime())) {
@@ -29,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateUrl(selectedDate);
     });
 
-    // Function to handle click on the "Previous Day" button
     prevDayButton.addEventListener('click', function() {
         var selectedDate = new Date(datePicker.value);
         if (isNaN(selectedDate.getTime())) {
@@ -39,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateUrl(selectedDate);
     });
 
-    // Function to handle change in the date picker
     datePicker.addEventListener('change', function() {
         var selectedDate = new Date(this.value);
         if (isNaN(selectedDate.getTime())) {
@@ -48,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateUrl(selectedDate);
     });
 
-    // Extract current date from URL and set it in the date picker when page loads
     var urlParams = new URLSearchParams(window.location.search);
     var taskDate = urlParams.get('task_date');
     if (taskDate) {
@@ -62,8 +56,11 @@ document.getElementById('datePicker').addEventListener('change', function() {
 
 function toggleTaskInput() {
     var taskInputContainer = document.getElementById("taskInputContainer");
+    var taskInput = document.getElementById("taskTitle");
+
     if (taskInputContainer.style.display === "none") {
         taskInputContainer.style.display = "block";
+        taskInput.focus();  // Set focus to the input field
     } else {
         taskInputContainer.style.display = "none";
     }
@@ -77,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
         dropdownMenu.classList.toggle('show');
     });
 
-    // Close the dropdown if the user clicks outside of it
     window.addEventListener('click', function (event) {
         if (!profileInfo.contains(event.target)) {
             dropdownMenu.classList.remove('show');
