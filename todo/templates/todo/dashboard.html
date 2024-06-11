@@ -28,7 +28,7 @@
     </div>
     <div class="container">
         <div class="sidebar">
-            <h2>INCOMPLETE TASKS</h2>
+            <h2>Incomplete Tasks</h2>
             <ul>
                 {% for task in not_done_tasks %}
                 <li>
@@ -46,10 +46,10 @@
                     <input type="date" id="datePicker" max="{{ max_date }}" min="{{ min_date }}" value="{{ selected_date }}">
                     <button class="next-day-button" id="nextDayButton">Next Day</button>
                 </div>
-            </div>            
+            </div>
             <div class="tasks">
                 <div class="not-done">
-                    <h3>Karna hai <i id="addTaskIcon" class="fas fa-plus-circle" onclick="toggleTaskInput()"></i></h3>
+                    <h3>To Do <i id="addTaskIcon" class="fas fa-plus-circle" onclick="toggleTaskInput()"></i></h3>
                     <ul>
                         {% for task in tasks %}
                         {% if not task.completed %}
@@ -61,7 +61,7 @@
                                 <a href="{% url 'edit_task' task.id %}">Edit</a>
                                 <a href="{% url 'delete_task' task.id %}">Delete</a>
                             </form>
-                        </li>                        
+                        </li>
                         {% endif %}
                         {% endfor %}
                     </ul>
@@ -73,10 +73,9 @@
                             <button type="submit">Add Task</button>
                         </form>
                     </div>
-                    
                 </div>
                 <div class="done">
-                    <h3>Ho gaya</h3>
+                    <h3>Completed</h3>
                     <ul>
                         {% for task in tasks %}
                         {% if task.completed %}
@@ -92,7 +91,7 @@
                 </div>
             </div>
             <div class="learning">
-                <h3>Today learning:</h3>
+                <h3>Today's Learning:</h3>
                 <form method="post">
                     {% csrf_token %}
                     <textarea name="learning_content">{{ learning_content }}</textarea>

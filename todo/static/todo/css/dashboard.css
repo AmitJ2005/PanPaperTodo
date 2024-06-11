@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f5f7fa;
+    color: #333;
 }
 
 /* Navbar and Profile Dropdown Styling */
@@ -11,7 +12,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 50px;
-    background-color: #f8f9fa;
+    background-color: #2a3f54;
+    color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -48,7 +50,7 @@ body {
     position: absolute;
     right: 0;
     top: 50px;
-    background-color: white;
+    background-color: #fff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 4px;
@@ -63,6 +65,7 @@ body {
     color: #333;
     text-decoration: none;
     white-space: nowrap;
+    transition: background-color 0.3s ease;
 }
 
 .dropdown-menu a:hover {
@@ -80,7 +83,7 @@ body {
 .container {
     display: flex;
     height: calc(100vh - 60px);
-    margin: 20px;
+    padding: 20px;
 }
 
 .sidebar {
@@ -97,6 +100,7 @@ body {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 20px;
+    color: #2a3f54;
 }
 
 .sidebar ul {
@@ -122,7 +126,7 @@ body {
 }
 
 .main {
-    width: 75%;
+    width: 100%;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -144,12 +148,12 @@ body {
     margin: 0;
     font-size: 22px;
     font-weight: 600;
-    color: #343a40;
+    color: #2a3f54;
 }
 
 .header button,
 .header input {
-    background-color: #343a40;
+    background-color: #2a3f54;
     color: #fff;
     border: none;
     padding: 8px 12px;
@@ -240,7 +244,7 @@ body {
     margin-top: 0;
     font-size: 18px;
     font-weight: 600;
-    color: #343a40;
+    color: #2a3f54;
 }
 
 .tasks ul {
@@ -283,8 +287,6 @@ body {
     flex: 1; /* Allow the text to take the remaining space */
     word-break: break-word; /* Break long words */
 }
-
-
 
 #addTaskIcon {
     cursor: pointer;
@@ -333,7 +335,7 @@ form input[type="text"]:focus {
 
 form button[type="submit"],
 button {
-    background-color: #343a40;
+    background-color: #2a3f54;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -361,7 +363,7 @@ button:hover {
     margin-top: 0;
     font-size: 18px;
     font-weight: 600;
-    color: #343a40;
+    color: #2a3f54;
 }
 
 textarea {
@@ -371,10 +373,4 @@ textarea {
     font-size: 16px;
     border: 1px solid #dee2e6;
     border-radius: 4px;
-}
-
-.profile img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
 }
