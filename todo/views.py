@@ -17,6 +17,8 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import ProfileForm
 from .models import Profile
 from .forms import UserForm, ProfileForm
+from dateutil import parser
+from django.conf import settings
 
 
 def index(request):
@@ -42,7 +44,15 @@ def dashboard(request):
     max_date = current_date + datetime.timedelta(days=30)
     
     selected_date_str = request.GET.get('task_date', current_date.strftime('%Y-%m-%d'))
-    selected_date = datetime.datetime.strptime(selected_date_str, '%Y-%m-%d').date()
+    
+    # Handle selected_date from form submission
+    if request.method == 'POST':
+        selected_date_str = request.POST.get('selected_date', current_date.strftime('%Y-%m-%d'))
+        
+    try:
+        selected_date = parser.parse(selected_date_str).date()
+    except ValueError:
+        selected_date = current_date
     
     tasks = Task.objects.filter(user=request.user, due_date=selected_date)
     not_done_tasks = Task.objects.filter(user=request.user, completed=False).exclude(due_date=selected_date)
@@ -56,7 +66,7 @@ def dashboard(request):
             else:
                 learning = Learning(user=request.user, date=selected_date, content=learning_content)
             learning.save()
-            return redirect('dashboard')
+            return redirect(f'{request.path}?task_date={selected_date}')
         else:
             form = TaskForm(request.POST)
             if form.is_valid():
@@ -64,7 +74,7 @@ def dashboard(request):
                 task.user = request.user
                 task.due_date = selected_date
                 task.save()
-                return redirect('dashboard')
+                return redirect(f'{request.path}?task_date={selected_date}')
     else:
         form = TaskForm()
     
@@ -115,21 +125,48 @@ def profile(request):
         user_form = UserForm(request.POST, instance=user)
         profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
         
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
+        if profile_form.is_valid():
+            # Check if only profile picture is being updated
+            if 'profile_picture' in request.FILES:
+                new_profile = profile_form.save(commit=False)
+                new_profile.profile_picture = request.FILES['profile_picture']
+                new_profile.save(update_fields=['profile_picture'])
+            else:
+                # Update both user information and profile picture
+                if user_form.is_valid():
+                    user_form.save()
+                profile_form.save()
+
             messages.success(request, 'Your profile was successfully updated!')
             return redirect('profile')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        user_form = UserForm(instance=user)
+        # Populate forms with initial data
+        user_form = UserForm(instance=user, initial={'username': user.username, 'email': user.email})
         profile_form = ProfileForm(instance=profile)
-
+        
     return render(request, 'todo/profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
     })
+
+
+@login_required
+def delete_profile_picture(request):
+    profile = request.user.profile
+    if profile.profile_picture and profile.profile_picture.name != 'profile_pictures/default.png':
+        # Delete the existing profile picture file
+        profile.profile_picture.delete()
+        # Set the profile picture field to None
+        profile.profile_picture = None
+        profile.save()
+        messages.success(request, 'Profile picture deleted successfully!')
+    else:
+        messages.error(request, 'No profile picture to delete or already using default picture.')
+    
+    return redirect('profile')
+
 
 @login_required
 def change_password(request):
