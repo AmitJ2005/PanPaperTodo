@@ -1,23 +1,16 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
-from .models import Task  # Make sure to import the Task model
-from .forms import TaskForm  # Ensure TaskForm is also imported if used in the dashboard view
-from django.contrib import messages
+from django.contrib.auth import login
 from .forms import SignUpForm
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from .models import Task, Learning, Profile
+from .forms import TaskForm, LearningForm, ProfileForm, UserForm
 from django.utils import timezone
 import datetime
-import os
-from .forms import LearningForm
-from .models import Learning
+from dateutil import parser
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-from .forms import ProfileForm
-from .models import Profile
-from .forms import UserForm, ProfileForm
-from dateutil import parser
+from django.contrib import messages
 from django.conf import settings
 
 
@@ -29,6 +22,9 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.first_name = form.cleaned_data.get('first_name')
+            user.last_name = form.cleaned_data.get('last_name')
+            user.save()
             login(request, user)
             return redirect('dashboard')
     else:
@@ -145,10 +141,11 @@ def profile(request):
         # Populate forms with initial data
         user_form = UserForm(instance=user, initial={'username': user.username, 'email': user.email})
         profile_form = ProfileForm(instance=profile)
-        
+
     return render(request, 'todo/profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'username': user.username, 
     })
 
 
@@ -170,8 +167,9 @@ def delete_profile_picture(request):
 
 @login_required
 def change_password(request):
+    user = request.user
     if request.method == 'POST':
-        form = PasswordChangeForm(user=request.user, data=request.POST)
+        form = PasswordChangeForm(user=user, data=request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important to keep the user logged in
@@ -180,6 +178,11 @@ def change_password(request):
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        form = PasswordChangeForm(user=request.user)
+        form = PasswordChangeForm(user=user)
     
-    return render(request, 'todo/change_password.html', {'form': form})
+    context = {
+        'form': form,
+        'username': user.username,  # Add the username to the context
+    }
+
+    return render(request, 'todo/change_password.html', context)

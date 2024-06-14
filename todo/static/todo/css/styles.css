@@ -68,9 +68,7 @@ header {
     background-color: rgba(104, 85, 224, 1);
 }
 
-.profile-icon {
-    font-size: 1.5em;
-}
+
 
 main {
     display: flex;
