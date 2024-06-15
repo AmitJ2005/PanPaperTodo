@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import SignUpForm
@@ -22,9 +22,6 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user.first_name = form.cleaned_data.get('first_name')
-            user.last_name = form.cleaned_data.get('last_name')
-            user.save()
             login(request, user)
             return redirect('dashboard')
     else:
@@ -120,15 +117,13 @@ def profile(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=user)
         profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
-        
+
         if profile_form.is_valid():
-            # Check if only profile picture is being updated
             if 'profile_picture' in request.FILES:
                 new_profile = profile_form.save(commit=False)
                 new_profile.profile_picture = request.FILES['profile_picture']
                 new_profile.save(update_fields=['profile_picture'])
             else:
-                # Update both user information and profile picture
                 if user_form.is_valid():
                     user_form.save()
                 profile_form.save()
@@ -138,8 +133,7 @@ def profile(request):
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        # Populate forms with initial data
-        user_form = UserForm(instance=user, initial={'username': user.username, 'email': user.email})
+        user_form = UserForm(instance=user)
         profile_form = ProfileForm(instance=profile)
 
     return render(request, 'todo/profile.html', {

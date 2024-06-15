@@ -12,15 +12,29 @@
         <div class="logo"><a href="/">PanPaperToDo</a></div>
         <div class="right-side">
             <a href="{% url 'signup' %}" class="signup-button">Sign-up</a>
-            <div class="profile-icon">&#128100;</div>
         </div>
     </header>
     <main>
         <div class="container">
             <div class="center">
                 <h1>Login</h1>
-                <form method="POST" action="{% url 'login' %}">
+                <form id="login-form" method="POST" action="{% url 'login' %}">
                     {% csrf_token %}
+                    
+                    <!-- Error messages block -->
+                    <div id="error-container">
+                        {% if form.non_field_errors %}
+                        <div class="error_message">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                            <div class="error_message">{{ error }}</div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                    
                     <div class="txt_field">
                         <input type="text" name="username" required>
                         <span></span>
@@ -40,5 +54,6 @@
             </div>
         </div>
     </main>
+    <script src="{% static 'todo/js/login.js' %}"></script>
 </body>
 </html>

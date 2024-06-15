@@ -4,124 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #4CAF50;
-            margin-bottom: 20px;
-        }
-        form {
-            margin-top: 20px;
-        }
-        fieldset {
-            border: none;
-            margin-bottom: 20px;
-        }
-        legend {
-            font-weight: bold;
-            color: #555;
-        }
-        input[type="file"] {
-            margin-top: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 8px;
-            width: calc(100% - 90px);
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #007bff;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .profile-picture {
-            display: block;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border: 4px solid #4CAF50;
-        }
-        .delete-btn {
-            background-color: #dc3545;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 14px;
-            margin-left: 10px;
-        }
-        .delete-btn:hover {
-            background-color: #c82333;
-        }
-        .upload-btn {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 14px;
-            margin-left: 10px;
-        }
-        .upload-btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/css/profile.css' %}">
 </head>
 <body>
     <div class="container">
         <h1>User Profile</h1>
         {% if user.profile.profile_picture %}
         <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
-        <button type="button" class="delete-btn" onclick="deleteProfilePicture()">Delete Profile Picture</button>
+        <div class="flex-container">
+            <button type="button" class="delete-btn" onclick="deleteProfilePicture()">Delete Profile Picture</button>
+            <button type="button" class="upload-btn" onclick="document.getElementById('id_profile_picture').click()">Change Profile Picture</button>
+        </div>
         {% else %}
         <p>No profile picture available</p>
+        <div class="flex-container">
+            <button type="button" class="upload-btn" onclick="document.getElementById('id_profile_picture').click()">Upload Profile Picture</button>
+        </div>
         {% endif %}
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" id="profilePictureForm" style="display: none;">
             {% csrf_token %}
             <fieldset>
                 <legend>Upload Profile Picture</legend>
-                <input type="file" name="profile_picture">
-                <button type="submit" class="upload-btn">Upload</button>
+                <input type="file" name="profile_picture" id="id_profile_picture" onchange="uploadProfilePicture()">
             </fieldset>
         </form>
         <form method="post">
@@ -136,13 +41,6 @@
         <a href="{% url 'dashboard' %}">Back to Dashboard</a>
     </div>
 
-    <script>
-        function deleteProfilePicture() {
-            if (confirm("Are you sure you want to delete your profile picture?")) {
-                // Redirect to a view to handle profile picture deletion
-                window.location.href = "{% url 'delete_profile_picture' %}";
-            }
-        }
-    </script>
+    <script src="{% static 'todo/js/profile.js' %}"></script>
 </body>
 </html>
