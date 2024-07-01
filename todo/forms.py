@@ -8,7 +8,10 @@ from .models import Profile
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title']
+        fields = ['title', 'time']  # Only include 'title' and 'time'
+        widgets = {
+            'time': forms.TimeInput(attrs={'type': 'time'}),  # Time input widget
+        }
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)

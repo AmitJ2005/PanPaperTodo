@@ -5,6 +5,7 @@ class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     due_date = models.DateField()
+    time = models.TimeField(null=True, blank=True)  
     completed = models.BooleanField(default=False)
 
     def __str__(self):
